@@ -1,0 +1,19 @@
+parameters:
+- name: agentselection
+  displayName: 'Select the agent to run the pipeline'
+  values:
+  - 'Microsoft Hosted Agent'
+  - 'Self Hosted Agent'
+  default: 'Self Hosted Agent'
+
+jobs:
+- job : Agentselection
+  displayName: choosing agent using parameters
+  pool:
+    ${{ if eq(parameters.agentselection, 'Microsoft Hosted Agent') }}:
+      vmImage: 'windows-latest'
+    ${{ if eq(parameters.agentselection, 'Self Hosted Agent') }}:
+      name: 'my-self-hosted'
+
+  steps:
+  - script: echo "This is the pipeline to test the agent selection using parameter method"
